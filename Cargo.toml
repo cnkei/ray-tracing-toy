@@ -1,0 +1,19 @@
+[package]
+name = "ray-tracing-toy"
+version = "0.1.0"
+authors = ["Jason King <chn.kei@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+vec3 = { path="vec3" }
+
+[workspace]
+members = [
+    "vec3",
+
+    "week0chap01",
+]
+
+[[bin]]
+name = "week0chap01"
+path = "week0chap01/src/main.rs"
