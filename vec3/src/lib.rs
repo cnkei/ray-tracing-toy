@@ -58,8 +58,21 @@ impl Vec3 {
 
     #[inline]
     pub fn unit_vector(&self) -> Self {
-        let k = 1.0 / self.length();
-        self * k
+        *self / self.length()
+    }
+
+    #[inline]
+    pub fn dot(v1: Vec3, v2: Vec3) -> f32 {
+        v1.0.iter().zip(v2.0.iter()).map(|(u, v)| u * v).sum()
+    }
+
+    #[inline]
+    pub fn cross(v1: Vec3, v2: Vec3) -> Self {
+        Vec3::new(
+            v1[1] * v2[2] - v1[2] * v2[1],
+            v1[2] * v2[0] - v1[0] * v2[2],
+            v1[0] * v2[1] - v1[1] * v2[0],
+        )
     }
 }
 
@@ -79,61 +92,10 @@ macro_rules! impl_bin_op {
     };
 }
 
-macro_rules! forward_val_ref_bin_op {
-    (impl $imp:ident, $method:ident) => {
-        impl $imp<&Vec3> for Vec3 {
-            type Output = Vec3;
-
-            #[inline]
-            fn $method(self, rhs: &Vec3) -> Self::Output {
-                self.$method(*rhs)
-            }
-        }
-    };
-}
-
-macro_rules! forward_ref_val_bin_op {
-    (impl $imp:ident, $method:ident) => {
-        impl $imp<Vec3> for &Vec3 {
-            type Output = Vec3;
-
-            #[inline]
-            fn $method(self, rhs: Vec3) -> Self::Output {
-                (*self).$method(rhs)
-            }
-        }
-    };
-}
-
-macro_rules! forward_ref_ref_bin_op {
-    (impl $imp:ident, $method:ident) => {
-        impl $imp<&Vec3> for &Vec3 {
-            type Output = Vec3;
-
-            #[inline]
-            fn $method(self, rhs: &Vec3) -> Self::Output {
-                (*self).$method(*rhs)
-            }
-        }
-    };
-}
-
-macro_rules! forward_all_bin_op {
-    (impl $imp:ident, $method:ident) => {
-        forward_val_ref_bin_op!(impl $imp, $method);
-        forward_ref_val_bin_op!(impl $imp, $method);
-        forward_ref_ref_bin_op!(impl $imp, $method);
-    };
-}
-
 impl_bin_op!(impl Add, add);
-forward_all_bin_op!(impl Add, add);
-
 impl_bin_op!(impl Sub, sub);
-forward_all_bin_op!(impl Sub, sub);
-
 impl_bin_op!(impl Mul, mul);
-forward_all_bin_op!(impl Mul, mul);
+impl_bin_op!(impl Div, div);
 
 impl Mul<f32> for Vec3 {
     type Output = Vec3;
@@ -147,15 +109,6 @@ impl Mul<f32> for Vec3 {
     }
 }
 
-impl Mul<f32> for &Vec3 {
-    type Output = Vec3;
-
-    #[inline]
-    fn mul(self, rhs: f32) -> Self::Output {
-        (*self) * rhs
-    }
-}
-
 impl Mul<Vec3> for f32 {
     type Output = Vec3;
 
@@ -165,33 +118,12 @@ impl Mul<Vec3> for f32 {
     }
 }
 
-impl Mul<&Vec3> for f32 {
-    type Output = Vec3;
-
-    #[inline]
-    fn mul(self, rhs: &Vec3) -> Self::Output {
-        rhs * self
-    }
-}
-
-impl_bin_op!(impl Div, div);
-forward_all_bin_op!(impl Div, div);
-
 impl Div<f32> for Vec3 {
     type Output = Vec3;
 
     #[inline]
     fn div(self, rhs: f32) -> Self::Output {
         self * (1.0 / rhs)
-    }
-}
-
-impl Div<f32> for &Vec3 {
-    type Output = Vec3;
-
-    #[inline]
-    fn div(self, rhs: f32) -> Self::Output {
-        (*self) / rhs
     }
 }
 
@@ -254,19 +186,6 @@ mod tests {
         );
         assert_eq!(
             Vec3::new(2.0, -4.0, 6.0),
-            Vec3::new(1.0, -2.0, 3.0) + &Vec3::new(1.0, -2.0, 3.0)
-        );
-        assert_eq!(
-            Vec3::new(2.0, -4.0, 6.0),
-            &Vec3::new(1.0, -2.0, 3.0) + Vec3::new(1.0, -2.0, 3.0)
-        );
-        assert_eq!(
-            Vec3::new(2.0, -4.0, 6.0),
-            &Vec3::new(1.0, -2.0, 3.0) + &Vec3::new(1.0, -2.0, 3.0)
-        );
-
-        assert_eq!(
-            Vec3::new(2.0, -4.0, 6.0),
             Vec3::new(3.0, -6.0, 9.0) - Vec3::new(1.0, -2.0, 3.0)
         );
         assert_eq!(
@@ -279,23 +198,26 @@ mod tests {
         );
 
         assert_eq!(Vec3::new(6.0, -12.0, 18.0), Vec3::new(3.0, -6.0, 9.0) * 2.0);
-        assert_eq!(
-            Vec3::new(6.0, -12.0, 18.0),
-            &Vec3::new(3.0, -6.0, 9.0) * 2.0
-        );
         assert_eq!(Vec3::new(6.0, -12.0, 18.0), 2.0 * Vec3::new(3.0, -6.0, 9.0));
-        assert_eq!(
-            Vec3::new(6.0, -12.0, 18.0),
-            2.0 * &Vec3::new(3.0, -6.0, 9.0)
-        );
         assert_eq!(Vec3::new(1.0, -2.0, 3.0), Vec3::new(3.0, -6.0, 9.0) / 3.0);
-        assert_eq!(Vec3::new(1.0, -2.0, 3.0), &Vec3::new(3.0, -6.0, 9.0) / 3.0);
 
         assert_eq!(50.0, Vec3::new(3.0, 4.0, -5.0).squared_length());
         assert_eq!(5.0, Vec3::new(3.0, -4.0, 0.0).length());
         assert_eq!(
             Vec3::new(0.6, -0.8, 0.0),
             Vec3::new(3.0, -4.0, 0.0).unit_vector()
+        );
+    }
+
+    #[test]
+    fn test_dot_cross() {
+        assert_eq!(
+            10.0,
+            Vec3::dot(Vec3::new(1.0, 2.0, 3.0), Vec3::new(3.0, 2.0, 1.0))
+        );
+        assert_eq!(
+            Vec3::new(0.0, 0.0, 1.0),
+            Vec3::cross(Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))
         );
     }
 }
