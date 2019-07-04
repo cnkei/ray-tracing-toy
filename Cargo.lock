@@ -3,15 +3,20 @@
 [[package]]
 name = "ray-tracing-toy"
 version = "0.1.0"
-dependencies = [
- "vec3 0.1.0",
-]
-
-[[package]]
-name = "vec3"
-version = "0.1.0"
 
 [[package]]
 name = "week0chap01"
+version = "0.1.0"
+
+[[package]]
+name = "week0chap02"
+version = "0.1.0"
+
+[[package]]
+name = "week0chap03"
+version = "0.1.0"
+
+[[package]]
+name = "week0chap04"
 version = "0.1.0"
 

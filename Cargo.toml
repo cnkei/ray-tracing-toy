@@ -5,15 +5,27 @@ authors = ["Jason King <chn.kei@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-vec3 = { path="vec3" }
 
 [workspace]
 members = [
-    "vec3",
-
     "week0chap01",
+    "week0chap02",
+    "week0chap03",
+    "week0chap04",
 ]
 
 [[bin]]
 name = "week0chap01"
 path = "week0chap01/src/main.rs"
+
+[[bin]]
+name = "week0chap02"
+path = "week0chap02/src/main.rs"
+
+[[bin]]
+name = "week0chap03"
+path = "week0chap03/src/main.rs"
+
+[[bin]]
+name = "week0chap04"
+path = "week0chap04/src/main.rs"
