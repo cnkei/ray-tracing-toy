@@ -5,3 +5,4 @@ authors = ["Jason King <chn.kei@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+rt = { path = "../rt" }

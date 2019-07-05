@@ -1,5 +1,6 @@
 use std::ops::Neg;
 use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{AddAssign, DivAssign, MulAssign};
 use std::ops::{Index, IndexMut};
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -59,6 +60,11 @@ impl Vec3 {
     #[inline]
     pub fn unit_vector(&self) -> Self {
         *self / self.length()
+    }
+
+    #[inline]
+    pub fn sqrt(&self) -> Self {
+        Vec3::new(self[0].sqrt(), self[1].sqrt(), self[2].sqrt())
     }
 
     #[inline]
@@ -130,12 +136,14 @@ impl Div<f32> for Vec3 {
 impl Index<usize> for Vec3 {
     type Output = f32;
 
+    #[inline]
     fn index(&self, index: usize) -> &Self::Output {
         &self.0[index]
     }
 }
 
 impl IndexMut<usize> for Vec3 {
+    #[inline]
     fn index_mut(&mut self, index: usize) -> &mut Self::Output {
         &mut self.0[index]
     }
@@ -144,12 +152,31 @@ impl IndexMut<usize> for Vec3 {
 impl Neg for Vec3 {
     type Output = Self;
 
+    #[inline]
     fn neg(self) -> Self::Output {
         let mut v = self;
         for i in 0..3 {
             v[i] = -v[i];
         }
         v
+    }
+}
+
+impl AddAssign<Vec3> for Vec3 {
+    fn add_assign(&mut self, rhs: Vec3) {
+        *self = *self + rhs;
+    }
+}
+
+impl MulAssign<f32> for Vec3 {
+    fn mul_assign(&mut self, rhs: f32) {
+        *self = *self * rhs;
+    }
+}
+
+impl DivAssign<f32> for Vec3 {
+    fn div_assign(&mut self, rhs: f32) {
+        *self = *self / rhs;
     }
 }
 

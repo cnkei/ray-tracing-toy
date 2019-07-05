@@ -1,8 +1,8 @@
 [package]
-name = "week0chap03"
+name = "rt"
 version = "0.1.0"
 authors = ["Jason King <chn.kei@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-rt = { path = "../rt" }
+rand = "0.7.0"

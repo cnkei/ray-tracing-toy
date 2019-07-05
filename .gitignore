@@ -12,3 +12,7 @@
 
 /target
 #**/*.rs.bk
+
+**/target
+
+*.ppm

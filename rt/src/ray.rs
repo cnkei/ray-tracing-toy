@@ -8,12 +8,12 @@ impl Ray {
         Ray(origin, direction)
     }
 
-    pub fn origin(&self) -> Vec3 {
-        self.0
+    pub fn origin(&self) -> &Vec3 {
+        &self.0
     }
 
-    pub fn direction(&self) -> Vec3 {
-        self.1
+    pub fn direction(&self) -> &Vec3 {
+        &self.1
     }
 
     pub fn point_at_parameter(&self, t: f32) -> Vec3 {
@@ -22,5 +22,4 @@ impl Ray {
 }
 
 #[cfg(test)]
-mod tests {
-}
+mod tests {}

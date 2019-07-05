@@ -5,13 +5,21 @@ authors = ["Jason King <chn.kei@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+rt = { path = "rt" }
+rand = "0.7.0"
 
 [workspace]
 members = [
+	"rt",
+
     "week0chap01",
     "week0chap02",
     "week0chap03",
     "week0chap04",
+    "week0chap05",
+    "week0chap06",
+    "week0chap07",
+    "week0chap08",
 ]
 
 [[bin]]
@@ -29,3 +37,19 @@ path = "week0chap03/src/main.rs"
 [[bin]]
 name = "week0chap04"
 path = "week0chap04/src/main.rs"
+
+[[bin]]
+name = "week0chap05"
+path = "week0chap05/src/main.rs"
+
+[[bin]]
+name = "week0chap06"
+path = "week0chap06/src/main.rs"
+
+[[bin]]
+name = "week0chap07"
+path = "week0chap07/src/main.rs"
+
+[[bin]]
+name = "week0chap08"
+path = "week0chap08/src/main.rs"
