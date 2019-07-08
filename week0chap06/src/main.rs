@@ -2,9 +2,9 @@ use rand::{thread_rng, Rng};
 use rt::{
     camera::Camera,
     hitable::{Hitable, HitableList, Sphere},
+    material::Lambertian,
     ray::Ray,
     vec3::Vec3,
-    material::Lambertian,
 };
 
 fn color(r: &Ray, world: &dyn Hitable) -> Vec3 {
@@ -23,9 +23,17 @@ fn main() {
     let ns = 100;
     println!("P3\n{} {}\n255", nx, ny);
     let mut world = HitableList::new();
-    let camera = Camera::new(4.0, 2.0, 1.0);
-    world.push(Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5, Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))))));
-    world.push(Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0, Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))))));
+    let camera = Camera::new_simple(4.0, 2.0, 1.0);
+    world.push(Box::new(Sphere::new(
+        Vec3::new(0.0, 0.0, -1.0),
+        0.5,
+        Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))),
+    )));
+    world.push(Box::new(Sphere::new(
+        Vec3::new(0.0, -100.5, -1.0),
+        100.0,
+        Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))),
+    )));
     for j in (0..ny).rev() {
         for i in 0..nx {
             let mut col = Vec3::zero();

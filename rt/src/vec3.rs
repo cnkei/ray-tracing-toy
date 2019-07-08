@@ -68,12 +68,12 @@ impl Vec3 {
     }
 
     #[inline]
-    pub fn dot(v1: Vec3, v2: Vec3) -> f32 {
+    pub fn dot(v1: &Vec3, v2: &Vec3) -> f32 {
         v1.0.iter().zip(v2.0.iter()).map(|(u, v)| u * v).sum()
     }
 
     #[inline]
-    pub fn cross(v1: Vec3, v2: Vec3) -> Self {
+    pub fn cross(v1: &Vec3, v2: &Vec3) -> Self {
         Vec3::new(
             v1[1] * v2[2] - v1[2] * v2[1],
             v1[2] * v2[0] - v1[0] * v2[2],

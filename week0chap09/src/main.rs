@@ -2,7 +2,7 @@ use rand::{thread_rng, Rng};
 use rt::{
     camera::Camera,
     hitable::{Hitable, HitableList, Sphere},
-    material::{Lambertian, Metal},
+    material::{Dielectric, Lambertian, Metal},
     ray::Ray,
     vec3::Vec3,
 };
@@ -32,17 +32,22 @@ fn main() {
     world.push(Box::new(Sphere::new(
         Vec3::new(0.0, 0.0, -1.0),
         0.5,
-        Box::new(Lambertian::new(Vec3::new(0.8, 0.3, 0.3))),
+        Box::new(Lambertian::new(Vec3::new(0.1, 0.2, 0.5))),
     )));
     world.push(Box::new(Sphere::new(
         Vec3::new(1.0, 0.0, -1.0),
         0.5,
-        Box::new(Metal::new(Vec3::new(0.8, 0.6, 0.2), 1.0)),
+        Box::new(Metal::new(Vec3::new(0.8, 0.6, 0.2), 0.3)),
     )));
     world.push(Box::new(Sphere::new(
         Vec3::new(-1.0, 0.0, -1.0),
         0.5,
-        Box::new(Metal::new(Vec3::new(0.8, 0.8, 0.8), 0.3)),
+        Box::new(Dielectric::new(1.5)),
+    )));
+    world.push(Box::new(Sphere::new(
+        Vec3::new(-1.0, 0.0, -1.0),
+        -0.45,
+        Box::new(Dielectric::new(1.5)),
     )));
     world.push(Box::new(Sphere::new(
         Vec3::new(0.0, -100.5, -1.0),

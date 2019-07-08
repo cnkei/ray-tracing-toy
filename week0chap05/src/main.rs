@@ -1,8 +1,8 @@
 use rt::{
     hitable::{Hitable, HitableList, Sphere},
+    material::Lambertian,
     ray::Ray,
     vec3::Vec3,
-    material::Lambertian,
 };
 
 fn color(r: &Ray, world: &dyn Hitable) -> Vec3 {
@@ -23,8 +23,16 @@ fn main() {
     let vertical = Vec3::new(0.0, 2.0, 0.0);
     let origin = Vec3::zero();
     let mut world = HitableList::new();
-    world.push(Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5, Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))))));
-    world.push(Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0, Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))))));
+    world.push(Box::new(Sphere::new(
+        Vec3::new(0.0, 0.0, -1.0),
+        0.5,
+        Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))),
+    )));
+    world.push(Box::new(Sphere::new(
+        Vec3::new(0.0, -100.5, -1.0),
+        100.0,
+        Box::new(Lambertian::new(Vec3::new(0.5, 0.5, 0.5))),
+    )));
     for j in (0..ny).rev() {
         for i in 0..nx {
             let u = i as f32 / nx as f32;

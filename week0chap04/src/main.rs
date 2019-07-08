@@ -2,9 +2,9 @@ use rt::{ray::Ray, vec3::Vec3};
 
 fn hit_sphere(center: &Vec3, radius: f32, r: &Ray) -> bool {
     let oc = *r.origin() - *center;
-    let a = Vec3::dot(*r.direction(), *r.direction());
-    let b = 2.0 * Vec3::dot(oc, *r.direction());
-    let c = Vec3::dot(oc, oc) - radius * radius;
+    let a = Vec3::dot(r.direction(), r.direction());
+    let b = 2.0 * Vec3::dot(&oc, r.direction());
+    let c = Vec3::dot(&oc, &oc) - radius * radius;
     b * b - 4.0 * a * c > 0.0
 }
 
