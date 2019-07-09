@@ -34,6 +34,8 @@ fn main() {
         Vec3::new(0.0, 1.0, 0.0),
         30.0,
         nx as f32 / ny as f32,
+        0.0,
+        1.0,
     );
     world.push(Box::new(Sphere::new(
         Vec3::new(0.0, 0.0, -1.0),
