@@ -47,7 +47,7 @@ impl Hitable for HitableList {
         let mut hit = None;
         let mut closest = t_max;
         for obj in self.0.iter() {
-            if let Some(this_hit) = obj.hit(r, t_min, t_max) {
+            if let Some(this_hit) = obj.hit(r, t_min, closest) {
                 if this_hit.t < closest {
                     closest = this_hit.t;
                     hit = Some(this_hit);
@@ -77,6 +77,16 @@ impl Sphere {
 impl Hitable for Sphere {
     fn hit(&self, r: &Ray, t_min: f32, t_max: f32) -> Option<HitRecord> {
         let oc = *r.origin() - self.center;
+        let center_dist = oc.length();
+        let dir_len = r.direction().length();
+        let t_near = (center_dist - self.radius.abs()) / dir_len;
+        if t_near > t_max {
+            return None;
+        }
+        let t_far = (center_dist + self.radius.abs()) / dir_len;
+        if t_far < t_min {
+            return None;
+        }
         let a = Vec3::dot(r.direction(), r.direction());
         let b = Vec3::dot(&oc, r.direction());
         let c = Vec3::dot(&oc, &oc) - self.radius * self.radius;

@@ -23,6 +23,7 @@ members = [
     "week0chap09",
     "week0chap10",
     "week0chap11",
+    "week0chap12",
 ]
 
 [[bin]]
@@ -68,3 +69,7 @@ path = "week0chap10/src/main.rs"
 [[bin]]
 name = "week0chap11"
 path = "week0chap11/src/main.rs"
+
+[[bin]]
+name = "week0chap12"
+path = "week0chap12/src/main.rs"
