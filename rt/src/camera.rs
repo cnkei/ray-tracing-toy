@@ -1,6 +1,6 @@
 use crate::{ray::Ray, vec3::Vec3};
-use std::f32::consts::PI;
 use rand::{thread_rng, Rng};
+use std::f32::consts::PI;
 
 pub struct Camera {
     origin: Vec3,
@@ -14,7 +14,15 @@ pub struct Camera {
 }
 
 impl Camera {
-    pub fn new(lookfrom: Vec3, lookat: Vec3, vup: Vec3, vfov: f32, aspect: f32, aperture: f32, focus_dist: f32) -> Self {
+    pub fn new(
+        lookfrom: Vec3,
+        lookat: Vec3,
+        vup: Vec3,
+        vfov: f32,
+        aspect: f32,
+        aperture: f32,
+        focus_dist: f32,
+    ) -> Self {
         let theta = vfov * PI / 180.0;
         let half_height = (theta / 2.0).tan();
         let half_width = aspect * half_height;
@@ -30,7 +38,9 @@ impl Camera {
             lower_left_corner,
             horizontal,
             vertical,
-            u, v, _w: w,
+            u,
+            v,
+            _w: w,
             lens_radius: aperture / 2.0,
         }
     }

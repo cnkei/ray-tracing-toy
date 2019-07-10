@@ -1,0 +1,9 @@
+[package]
+name = "shader-rt"
+version = "0.1.0"
+authors = ["Jason King <chn.kei@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+vulkano = "0.13.0"
+vulkano-shaders = "0.13"

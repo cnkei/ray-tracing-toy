@@ -28,7 +28,15 @@ fn main() {
     let ns = 100;
     println!("P3\n{} {}\n255", nx, ny);
     let mut world = HitableList::new();
-    let camera = Camera::new(Vec3::zero(), Vec3::new(0.0, 0.0, -1.0), Vec3::new(0.0, 1.0, 0.0), 90.0, nx as f32 / ny as f32, 0.0, 1.0);
+    let camera = Camera::new(
+        Vec3::zero(),
+        Vec3::new(0.0, 0.0, -1.0),
+        Vec3::new(0.0, 1.0, 0.0),
+        90.0,
+        nx as f32 / ny as f32,
+        0.0,
+        1.0,
+    );
     world.push(Box::new(Sphere::new(
         Vec3::new(0.0, 0.0, -1.0),
         0.5,

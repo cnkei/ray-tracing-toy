@@ -32,18 +32,36 @@ fn gen_world() -> HitableList {
     for a in -11..11 {
         for b in -11..11 {
             let choose_nat: f32 = rng.gen();
-            let center = Vec3::new(a as f32 + 0.9 * rng.gen::<f32>(), 0.2, b as f32 + 0.9 * rng.gen::<f32>());
+            let center = Vec3::new(
+                a as f32 + 0.9 * rng.gen::<f32>(),
+                0.2,
+                b as f32 + 0.9 * rng.gen::<f32>(),
+            );
             if (center - Vec3::new(4.0, 0.2, 0.0)).length() < 0.9 {
                 continue;
             }
-            world.push(Box::new(Sphere::new(center, 0.2,
+            world.push(Box::new(Sphere::new(
+                center,
+                0.2,
                 if choose_nat < 0.8 {
-                    Box::new(Lambertian::new(Vec3::new(rng.gen::<f32>() * rng.gen::<f32>(), rng.gen::<f32>() * rng.gen::<f32>(), rng.gen::<f32>() * rng.gen::<f32>())))
+                    Box::new(Lambertian::new(Vec3::new(
+                        0.234 * rng.gen::<f32>() + 0.765,
+                        0.234 * rng.gen::<f32>() + 0.765,
+                        0.234 * rng.gen::<f32>() + 0.765,
+                    )))
+                // Box::new(Lambertian::new(Vec3::new(rng.gen::<f32>() * rng.gen::<f32>(), rng.gen::<f32>() * rng.gen::<f32>(), rng.gen::<f32>() * rng.gen::<f32>())))
                 } else if choose_nat < 0.95 {
-                    Box::new(Metal::new(Vec3::new(0.5 * (1.0 + rng.gen::<f32>()), 0.5 * (1.0 + rng.gen::<f32>()), 0.5 * (1.0 + rng.gen::<f32>())), 0.5 * rng.gen::<f32>()))
+                    Box::new(Metal::new(
+                        Vec3::new(
+                            0.5 * (1.0 + rng.gen::<f32>()),
+                            0.5 * (1.0 + rng.gen::<f32>()),
+                            0.5 * (1.0 + rng.gen::<f32>()),
+                        ),
+                        0.5 * rng.gen::<f32>(),
+                    ))
                 } else {
                     Box::new(Dielectric::new(1.5))
-                }
+                },
             )));
         }
     }

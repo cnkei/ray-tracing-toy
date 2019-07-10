@@ -12,6 +12,8 @@ rand = "0.7.0"
 members = [
 	"rt",
 
+    "shader-rt",
+
     "week0chap01",
     "week0chap02",
     "week0chap03",
@@ -25,6 +27,10 @@ members = [
     "week0chap11",
     "week0chap12",
 ]
+
+[[bin]]
+name = "shader-rt"
+path = "shader-rt/src/main.rs"
 
 [[bin]]
 name = "week0chap01"
